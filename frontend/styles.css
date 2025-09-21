@@ -1,0 +1,259 @@
+/* 🌿 SwachhTrack Theme */
+
+:root {
+    --primary: #2E7D32;
+    --secondary: #FFC107;
+    --background: #F1F8E9;
+    --text-dark: #212121;
+    --text-light: #FAFAFA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Header */
+
+.header {
+    background: var(--primary);
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 1rem;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: var(--secondary);
+}
+
+
+/* Main */
+
+body {
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.title {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 6px rgba(46, 125, 50, 0.3);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #256628;
+}
+
+.signup-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.signup-text a {
+    color: var(--secondary);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* Footer */
+
+.footer {
+    background: var(--primary);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: var(--secondary);
+    text-decoration: none;
+    margin: 0 0.3rem;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Header */
+
+.header {
+    background: var(--primary);
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.header .logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav a {
+    color: var(--text-light);
+    margin-left: 1rem;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--secondary);
+}
+
+
+/* Profile Section */
+
+.profile-section {
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid #eee;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    margin-right: 1rem;
+    width: 80px;
+
+}
+
+
+/* Main */
+
+.main-container {
+    flex: 1;
+    padding: 1.5rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.map {
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    display: inline-block;
+    margin: 0.3rem;
+    padding: 0.7rem 1.2rem;
+    background: var(--primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #256628;
+}
+
+
+/* Footer */
+
+.footer {
+    background: var(--primary);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1rem;
+}

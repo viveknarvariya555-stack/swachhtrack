@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Complaints | SwachhTrack</title>
+
+    <!-- Animate.css for animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: #f0f7f5;
+            color: #333;
+        }
+        /* Header */
+        
+        .header {
+            background: #2e8b57;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        
+        .header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .header .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        
+        .header .nav a:hover,
+        .header .nav a.active {
+            text-decoration: underline;
+        }
+        /* Section Title */
+        
+        .section-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.8rem;
+            color: #2e8b57;
+            font-weight: bold;
+        }
+        /* Complaints + Map container */
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        /* Complaint Cards */
+        
+        .main-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .complaint-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .complaint-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .complaint-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2e8b57;
+        }
+        
+        .complaint-card p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .complaint-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .complaint-card button {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-assign {
+            background: #2e8b57;
+            color: #fff;
+        }
+        
+        .btn-resolve {
+            background: #ff9800;
+            color: #fff;
+        }
+        
+        .btn-reject {
+            background: #f44336;
+            color: #fff;
+        }
+        
+        .btn-assign:hover {
+            background: #276744;
+        }
+        
+        .btn-resolve:hover {
+            background: #e68900;
+        }
+        
+        .btn-reject:hover {
+            background: #d32f2f;
+        }
+        /* Map styling */
+        
+        #adminMap {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        /* Footer */
+        
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #2e8b57;
+            color: #fff;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">🌿 SwachhTrack</div>
+        <nav class="nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-drivers.html">Drivers</a>
+            <a href="#" class="active">Complaints</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <h2 class="section-title animate__animated animate__fadeInDown">Citizen Complaints</h2>
+
+    <!-- Map -->
+    <div id="adminMap" class="animate__animated animate__fadeInUp"></div>
+
+    <!-- Complaints List -->
+    <div class="main-container" id="complaintList">
+        <!-- Complaint cards will be injected here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SwachhTrack | Admin Panel</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        // Sample complaint data with coordinates
+        const complaints = [{
+            citizen: "Ramesh Kumar",
+            mobile: "9876543210",
+            issue: "Overflowing garbage bin",
+            image: "https://via.placeholder.com/300x150",
+            status: "Pending",
+            lat: 23.2599,
+            lng: 77.4126
+        }, {
+            citizen: "Sita Devi",
+            mobile: "9876543221",
+            issue: "Street litter problem",
+            image: "",
+            status: "Pending",
+            lat: 23.2630,
+            lng: 77.4170
+        }, {
+            citizen: "Amit Singh",
+            mobile: "9876543232",
+            issue: "Garbage truck missed collection",
+            image: "https://via.placeholder.com/300x150",
+            status: "Assigned",
+            lat: 23.2560,
+            lng: 77.4100
+        }, {
+            citizen: "Neha Sharma",
+            mobile: "9876543243",
+            issue: "Recycling bins not emptied",
+            image: "",
+            status: "Pending",
+            lat: 23.2610,
+            lng: 77.4140
+        }];
+
+        const drivers = ["Ramesh Kumar", "Sita Devi", "Amit Singh", "Neha Sharma"];
+
+        const complaintList = document.getElementById("complaintList");
+
+        // Initialize Leaflet Map
+        const map = L.map('adminMap').setView([23.2599, 77.4126], 13); // Bhopal center
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        complaints.forEach(complaint => {
+                    // Add marker on map
+                    const marker = L.marker([complaint.lat, complaint.lng]).addTo(map)
+                        .bindPopup(`<b>${complaint.citizen}</b><br>${complaint.issue}<br>Status: ${complaint.status}`);
+
+                    // Create card
+                    const card = document.createElement("div");
+                    card.className = "complaint-card animate__animated animate__fadeInUp";
+                    card.innerHTML = `
+                <h4>${complaint.citizen}</h4>
+                <p>Mobile: ${complaint.mobile}</p>
+                <p>Issue: ${complaint.issue}</p>
+                ${complaint.image ? `<img src="${complaint.image}" alt="Complaint Image">` : ''}
+                <p>Status: <b>${complaint.status}</b></p>
+                <label>Assign Driver:</label>
+                <select>
+                    <option value="">Select Driver</option>
+                    ${drivers.map(d => `<option value="${d}">${d}</option>`).join('')}
+                </select><br><br>
+                <button class="btn-assign">Assign</button>
+                <button class="btn-resolve">Resolve</button>
+                <button class="btn-reject">Reject</button>
+            `;
+            complaintList.appendChild(card);
+
+            // Buttons actions
+            const assignBtn = card.querySelector(".btn-assign");
+            const resolveBtn = card.querySelector(".btn-resolve");
+            const rejectBtn = card.querySelector(".btn-reject");
+            const selectDriver = card.querySelector("select");
+
+            assignBtn.addEventListener("click", () => {
+                complaint.status = "Assigned to " + (selectDriver.value || "No Driver");
+                card.querySelector("p b").textContent = complaint.status;
+                marker.bindPopup(`<b>${complaint.citizen}</b><br>${complaint.issue}<br>Status: ${complaint.status}`).openPopup();
+                alert(`Complaint assigned to ${selectDriver.value}`);
+            });
+
+            resolveBtn.addEventListener("click", () => {
+                complaint.status = "Resolved";
+                card.querySelector("p b").textContent = complaint.status;
+                marker.bindPopup(`<b>${complaint.citizen}</b><br>${complaint.issue}<br>Status: ${complaint.status}`).openPopup();
+                alert(`Complaint marked as resolved`);
+            });
+
+            rejectBtn.addEventListener("click", () => {
+                complaint.status = "Rejected";
+                card.querySelector("p b").textContent = complaint.status;
+                marker.bindPopup(`<b>${complaint.citizen}</b><br>${complaint.issue}<br>Status: ${complaint.status}`).openPopup();
+                alert(`Complaint rejected`);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Rewards - SwachhTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Fonts */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: #f0f7f5;
+            color: #333;
+        }
+        /* Header */
+        
+        .header {
+            background: #2e8b57;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        
+        .header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .header .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        
+        .header .nav a:hover,
+        .header .nav a.active {
+            text-decoration: underline;
+        }
+        /* Profile Section */
+        
+        .profile-section {
+            background: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            max-width: 900px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-section img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        
+        .profile-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-section p {
+            font-size: 1rem;
+        }
+        /* Rewards Card */
+        
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2e8b57;
+        }
+        /* Animated points */
+        
+        .points {
+            font-size: 2.5rem;
+            color: #ffb400;
+            font-weight: bold;
+            animation: bounceIn 1s;
+        }
+        /* Progress Bar */
+        
+        .progress-container {
+            background: #eee;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            height: 25px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #2e8b57;
+            width: 0%;
+            line-height: 25px;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            transition: width 1s;
+        }
+        /* Footer */
+        
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #2e8b57;
+            color: #fff;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">🌿 SwachhTrack</div>
+        <nav class="nav">
+            <a href="citizen-home.html">Dashboard</a>
+            <a href="citizen-complaints.html">Complaints</a>
+            <a href="#" class="active">Rewards</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-section animate__animated animate__fadeInDown">
+        <img src="assets/citizen.png" alt="Profile" class="profile-pic">
+        <div>
+            <h2 id="citizenName">Citizen Name</h2>
+            <p>Mobile: <span id="citizenMobile">9876543210</span></p>
+            <p>Rank: <b id="citizenRank">#5</b></p>
+        </div>
+    </section>
+
+    <!-- Rewards Card -->
+    <main class="main-container">
+        <div class="card animate__animated animate__fadeInUp">
+            <h3>Your Total Reward Points</h3>
+            <p class="points" id="totalPoints">0</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="pointsProgress">0%</div>
+            </div>
+            <p>Next Rank in: <b id="pointsToNextRank">30</b> points</p>
+            <p>Earn <b>10 points</b> for each feedback submitted!</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SwachhTrack | Citizen Rewards</p>
+    </footer>
+
+    <script>
+        // Simulated citizen data
+        let citizen = {
+            name: "Citizen Name",
+            mobile: "9876543210",
+            points: 120,
+            rank: 5,
+            nextRankPoints: 150
+        };
+
+        // Populate profile and points
+        document.getElementById('citizenName').innerText = citizen.name;
+        document.getElementById('citizenMobile').innerText = citizen.mobile;
+        document.getElementById('citizenRank').innerText = `#${citizen.rank}`;
+        document.getElementById('totalPoints').innerText = citizen.points;
+
+        // Animate progress bar
+        let progressPercent = Math.floor((citizen.points / citizen.nextRankPoints) * 100);
+        let progressBar = document.getElementById('pointsProgress');
+        setTimeout(() => {
+            progressBar.style.width = progressPercent + '%';
+            progressBar.innerText = progressPercent + '%';
+        }, 500);
+
+        document.getElementById('pointsToNextRank').innerText = citizen.nextRankPoints - citizen.points;
+    </script>
+</body>
+
+</html>

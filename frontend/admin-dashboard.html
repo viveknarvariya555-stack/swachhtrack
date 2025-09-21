@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SwachhTrack</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">🛠️ SwachhTrack Admin</div>
+        <nav class="nav">
+            <a href="drivers.html">Drivers</a>
+            <a href="complaints-admin.html">Complaints</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Profile -->
+    <section class="profile-section">
+        <img src="assets\admin.png" alt="Admin" class="profile-pic">
+        <div>
+            <h2>Admin</h2>
+            <p>Role: Super Admin</p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <main class="main-container">
+        <div id="adminMap" class="map"></div>
+
+        <div class="card">
+            <h3>Driver Statistics</h3>
+            <canvas id="driverChart"></canvas>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SwachhTrack | Admin Dashboard</p>
+    </footer>
+
+    <script>
+        // Admin Map with multiple drivers
+        const aMap = L.map('adminMap').setView([23.2599, 77.4126], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(aMap);
+
+        // Example driver markers
+        L.marker([23.2599, 77.4126]).addTo(aMap).bindPopup("Driver 1");
+        L.marker([23.27, 77.43]).addTo(aMap).bindPopup("Driver 2");
+
+        // Driver stats chart
+        const ctx = document.getElementById('driverChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Driver 1', 'Driver 2', 'Driver 3'],
+                datasets: [{
+                    label: 'Completed Pickups',
+                    data: [12, 8, 15],
+                    backgroundColor: '#2E7D32'
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>

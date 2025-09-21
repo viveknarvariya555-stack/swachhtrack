@@ -1,0 +1,73 @@
++
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard - SwachhTrack</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">🚛 SwachhTrack Driver</div>
+        <nav class="nav">
+            <a href="#">Dashboard</a>
+            <a href="#">History</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Profile -->
+    <section class="profile-section">
+        <img src="assets\worker.png" alt="Driver" class="profile-pic">
+        <div>
+            <h2>Driver Name</h2>
+            <p>Route: Zone 3</p>
+            <p>Status: <b>On Duty</b></p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <main class="main-container">
+        <div id="driverMap" class="map"></div>
+
+        <div class="card">
+            <h3>Job Actions</h3>
+            <button class="btn">Start Duty</button>
+            <button class="btn">Mark Pickup Done</button>
+            <button class="btn">End Duty</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SwachhTrack | Driver Dashboard</p>
+    </footer>
+
+    <script>
+        // Map with route example
+        const dMap = L.map('driverMap').setView([23.2599, 77.4126], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(dMap);
+
+        // Example route points
+        const points = [
+            [23.2599, 77.4126],
+            [23.265, 77.42],
+            [23.27, 77.43]
+        ];
+
+        L.polyline(points, {
+            color: 'green'
+        }).addTo(dMap);
+        points.forEach(p => L.marker(p).addTo(dMap));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Driver Management | SwachhTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: #f0f7f5;
+            color: #333;
+        }
+        /* Header */
+        
+        .header {
+            background: #2e8b57;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        
+        .header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .header .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        
+        .header .nav a:hover,
+        .header .nav a.active {
+            text-decoration: underline;
+        }
+        /* Section Title */
+        
+        .section-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.8rem;
+            color: #2e8b57;
+            font-weight: bold;
+        }
+        /* Driver Cards */
+        
+        .main-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .driver-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .driver-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .driver-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2e8b57;
+        }
+        
+        .driver-card p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .driver-card select {
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .driver-card button {
+            background: #2e8b57;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .driver-card button:hover {
+            background: #276744;
+        }
+        /* Footer */
+        
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #2e8b57;
+            color: #fff;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">🌿 SwachhTrack</div>
+        <nav class="nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="#" class="active">Drivers</a>
+            <a href="admin-complaints.html">Complaints</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <h2 class="section-title animate__animated animate__fadeInDown">Driver Management & Route Assignment</h2>
+
+    <!-- Driver List -->
+    <main class="main-container" id="driverList">
+        <!-- Driver cards will be injected here -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SwachhTrack | Admin Panel</p>
+    </footer>
+
+    <script>
+        // Sample driver data
+        const drivers = [{
+            name: "Ramesh Kumar",
+            mobile: "9876543210",
+            assignedRoute: "None"
+        }, {
+            name: "Sita Devi",
+            mobile: "9876543221",
+            assignedRoute: "Route 3"
+        }, {
+            name: "Amit Singh",
+            mobile: "9876543232",
+            assignedRoute: "Route 1"
+        }, {
+            name: "Neha Sharma",
+            mobile: "9876543243",
+            assignedRoute: "None"
+        }];
+
+        const routes = ["Route 1", "Route 2", "Route 3", "Route 4"];
+
+        const driverList = document.getElementById("driverList");
+
+        drivers.forEach(driver => {
+                    const card = document.createElement("div");
+                    card.className = "driver-card animate__animated animate__fadeInUp";
+                    card.innerHTML = `
+                <h4>${driver.name}</h4>
+                <p>Mobile: ${driver.mobile}</p>
+                <p>Current Route: <b>${driver.assignedRoute}</b></p>
+                <label>Assign Route:</label>
+                <select>
+                    <option value="">Select Route</option>
+                    ${routes.map(r => `<option value="${r}" ${driver.assignedRoute === r ? 'selected' : ''}>${r}</option>`).join('')}
+                </select>
+                <button>Assign</button>
+            `;
+            driverList.appendChild(card);
+
+            // Assign button click
+            const assignBtn = card.querySelector("button");
+            const selectRoute = card.querySelector("select");
+
+            assignBtn.addEventListener("click", () => {
+                driver.assignedRoute = selectRoute.value || "None";
+                card.querySelector("p b").textContent = driver.assignedRoute;
+                alert(`${driver.name} assigned to ${driver.assignedRoute}`);
+            });
+        });
+    </script>
+</body>
+
+</html>
